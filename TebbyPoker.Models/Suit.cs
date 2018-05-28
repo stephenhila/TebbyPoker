@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace TebbyPoker.Models
 {
-    public class Class1
+    public enum Suit
     {
+        Club = 0,
+        Spade,
+        Heart,
+        Diamond
     }
 }
