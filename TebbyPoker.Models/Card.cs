@@ -19,5 +19,10 @@ namespace TebbyPoker.Models
             _rank = rank;
             _suit = suit;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} of {1}", Enum.GetName(typeof(Rank), _rank), Enum.GetName(typeof(Suit), _suit));
+        }
     }
 }
