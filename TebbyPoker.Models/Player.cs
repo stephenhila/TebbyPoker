@@ -11,7 +11,14 @@ namespace TebbyPoker.Models
         string _name;
         public string Name { get { return _name; } }
 
-        Card[] _hand;
-        public Card[] Hand { get { return _hand; } }
+        List<Card> _hand;
+        public List<Card> Hand { get { return _hand; } }
+
+        public Player(string name)
+        {
+            this._name = name;
+
+            _hand = new List<Card>();
+        }
     }
 }

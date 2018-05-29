@@ -43,5 +43,12 @@ namespace TebbyPoker.Models
                 Shuffle();
             }
         }
+
+        public Card Draw()
+        {
+            Card card = _cards.FirstOrDefault();
+            _cards.Remove(card);
+            return card;
+        }
     }
 }

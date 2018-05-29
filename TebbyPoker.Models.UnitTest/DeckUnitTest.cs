@@ -60,5 +60,21 @@ namespace TebbyPoker.Models.UnitTest
             // Assert
             Assert.AreEqual(unitUnderTest.Cards.Select(card => card.ToString()).Distinct().Count(), expectedCount);
         }
+
+        [TestMethod]
+        public void Deck_Draw_CardDrawnCorrectly()
+        {
+            // Arrange
+            int expectedCount = 51;
+            Deck unitUnderTest = new Deck();
+
+            // Act
+            Card topCard = unitUnderTest.Cards.FirstOrDefault();
+            Card drawnCard = unitUnderTest.Draw();
+
+            // Assert
+            Assert.AreEqual(topCard, drawnCard);
+            Assert.AreEqual(unitUnderTest.Cards.Count, expectedCount);
+        }
     }
 }
