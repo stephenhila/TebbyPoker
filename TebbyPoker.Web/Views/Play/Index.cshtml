@@ -1,0 +1,15 @@
+﻿@model TebbyPoker.Web.Models.GameplayModel
+@{
+    ViewBag.Title = "Play";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Play</h2>
+
+Player Count: @Model.Players.Count()
+@{ 
+    foreach (var player in Model.Players)
+    {
+        @player.Name
+    }
+}

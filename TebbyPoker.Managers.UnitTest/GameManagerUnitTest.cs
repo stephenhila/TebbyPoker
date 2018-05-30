@@ -8,7 +8,7 @@ namespace TebbyPoker.Managers.UnitTest
     [TestClass]
     public class GameManagerUnitTest
     {
-        GameManager unitUnderTest;
+        IGameManager unitUnderTest;
 
         [TestInitialize]
         public void Initialize()
@@ -26,7 +26,7 @@ namespace TebbyPoker.Managers.UnitTest
             unitUnderTest.DistributeCards();
 
             // Assert
-            foreach (var player in unitUnderTest.Players)
+            foreach (var player in unitUnderTest.GetPlayers())
             {
                 Assert.AreEqual(player.Hand.Count, expectedCardCount);
             }
@@ -42,12 +42,13 @@ namespace TebbyPoker.Managers.UnitTest
             unitUnderTest.DistributeCards(2);
 
             // Assert
-            foreach (var player in unitUnderTest.Players)
+            foreach (var player in unitUnderTest.GetPlayers())
             {
                 Assert.AreEqual(player.Hand.Count, expectedCardCount);
             }
         }
 
+        #region methods for test arrangement
         private List<Player> CreatePlayers(params string[] names)
         {
             List<Player> players = new List<Player>();
@@ -59,5 +60,6 @@ namespace TebbyPoker.Managers.UnitTest
 
             return players;
         }
+        #endregion
     }
 }

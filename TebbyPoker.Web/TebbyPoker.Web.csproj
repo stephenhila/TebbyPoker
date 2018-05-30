@@ -149,9 +149,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlayController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GameplayModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -193,10 +195,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Play\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -210,6 +212,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TebbyPoker.Managers.Contracts\TebbyPoker.Managers.Contracts.csproj">
+      <Project>{38a64dfe-1196-47b9-9f04-5dc451c7b128}</Project>
+      <Name>TebbyPoker.Managers.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TebbyPoker.Managers\TebbyPoker.Managers.csproj">
+      <Project>{c18be352-a27a-499f-ac03-a1bab366aaad}</Project>
+      <Name>TebbyPoker.Managers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TebbyPoker.Models\TebbyPoker.Models.csproj">
+      <Project>{d491e81c-c019-4d5c-8684-27512e5e4b9a}</Project>
+      <Name>TebbyPoker.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

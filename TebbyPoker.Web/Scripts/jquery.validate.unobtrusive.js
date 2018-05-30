@@ -78,7 +78,7 @@
             container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
 
             $.each(validator.errorList, function () {
-                $("<li />").html(this.message).appendTo(list);
+                $("<li />").html(message).appendTo(list);
             });
         }
     }
@@ -157,7 +157,7 @@
                     $form
                         .off("reset." + data_validation, onResetProxy)
                         .on("reset." + data_validation, onResetProxy)
-                        .validate(this.options);
+                        .validate(options);
                 },
                 validate: function () {  // a validation function that is called by unobtrusive Ajax
                     $form.validate();
@@ -194,19 +194,19 @@
             valInfo.options.rules[element.name] = rules = {};
             valInfo.options.messages[element.name] = messages = {};
 
-            $.each(this.adapters, function () {
-                var prefix = "data-val-" + this.name,
+            $.each(adapters, function () {
+                var prefix = "data-val-" + name,
                     message = $element.attr(prefix),
                     paramValues = {};
 
                 if (message !== undefined) {  // Compare against undefined, because an empty message is legal (and falsy)
                     prefix += "-";
 
-                    $.each(this.params, function () {
+                    $.each(params, function () {
                         paramValues[this] = $element.attr(prefix + this);
                     });
 
-                    this.adapt({
+                    adapt({
                         element: element,
                         form: form,
                         message: message,
@@ -270,7 +270,7 @@
             fn = params;
             params = [];
         }
-        this.push({ name: adapterName, params: params, adapt: fn });
+        push({ name: adapterName, params: params, adapt: fn });
         return this;
     };
 
@@ -282,7 +282,7 @@
         /// <param name="ruleName" type="String" optional="true">[Optional] The name of the jQuery Validate rule. If not provided, the value
         /// of adapterName will be used instead.</param>
         /// <returns type="jQuery.validator.unobtrusive.adapters" />
-        return this.add(adapterName, function (options) {
+        return add(adapterName, function (options) {
             setValidationValues(options, ruleName || adapterName, true);
         });
     };
@@ -304,7 +304,7 @@
         /// <param name="maxAttribute" type="String" optional="true">[Optional] The name of the HTML attribute that
         /// contains the maximum value. The default is "max".</param>
         /// <returns type="jQuery.validator.unobtrusive.adapters" />
-        return this.add(adapterName, [minAttribute || "min", maxAttribute || "max"], function (options) {
+        return add(adapterName, [minAttribute || "min", maxAttribute || "max"], function (options) {
             var min = options.params.min,
                 max = options.params.max;
 
@@ -330,7 +330,7 @@
         /// <param name="ruleName" type="String" optional="true">[Optional] The name of the jQuery Validate rule. If not provided, the value
         /// of adapterName will be used instead.</param>
         /// <returns type="jQuery.validator.unobtrusive.adapters" />
-        return this.add(adapterName, [attribute || "val"], function (options) {
+        return add(adapterName, [attribute || "val"], function (options) {
             setValidationValues(options, ruleName || adapterName, options.params[attribute]);
         });
     };
@@ -341,7 +341,7 @@
 
     $jQval.addMethod("regex", function (value, element, params) {
         var match;
-        if (this.optional(element)) {
+        if (optional(element)) {
             return true;
         }
 

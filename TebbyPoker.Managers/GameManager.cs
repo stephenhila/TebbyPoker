@@ -7,27 +7,39 @@ using TebbyPoker.Models;
 
 namespace TebbyPoker.Managers
 {
-    public class GameManager
+    public class GameManager : IGameManager
     {
         List<Player> _players;
-        public List<Player> Players { get { return _players; } }
+        public List<Player> GetPlayers() { return _players; }
 
         Deck _deck;
-        public Deck Deck { get { return _deck; } }
+        protected Deck GetDeck() { return _deck; }
 
         List<Card> _discardedCards;
 
         List<Card> _revealedCards;
-        public List<Card> RevealedCards { get { return _revealedCards; } }
+        public List<Card> GetRevealedCards() { return _revealedCards; }
 
-        public GameManager(List<Player> players)
+        public GameManager()
         {
-            this._players = players;
-            this._deck = new Deck();
-            this._deck.Shuffle(3);
+            _players = new List<Player>();
+            _deck = new Deck();
 
             _discardedCards = new List<Card>();
             _revealedCards = new List<Card>();
+        }
+
+        public void AddPlayer(string name)
+        {
+            _players.Add(new Player(name));
+        }
+
+        public void StartNewGame()
+        {
+            if (_players == null || _players.Count < 1)
+            { throw new InvalidOperationException("There are no players in the game!"); }
+
+            _deck.Shuffle(3);
         }
 
         public void DistributeCards()

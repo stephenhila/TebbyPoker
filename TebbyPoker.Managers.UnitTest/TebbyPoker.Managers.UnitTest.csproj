@@ -55,6 +55,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TebbyPoker.Managers.Contracts\TebbyPoker.Managers.Contracts.csproj">
+      <Project>{38a64dfe-1196-47b9-9f04-5dc451c7b128}</Project>
+      <Name>TebbyPoker.Managers.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TebbyPoker.Managers\TebbyPoker.Managers.csproj">
       <Project>{c18be352-a27a-499f-ac03-a1bab366aaad}</Project>
       <Name>TebbyPoker.Managers</Name>

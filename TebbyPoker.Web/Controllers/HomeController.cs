@@ -15,14 +15,14 @@ namespace TebbyPoker.Web.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "About the author:";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Hi. If you find that the output of this take-home exam has been being good enough, then please contact me through the following:";
 
             return View();
         }

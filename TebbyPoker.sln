@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TebbyPoker.Web", "TebbyPoke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TebbyPoker.Web.UnitTest", "TebbyPoker.Web.UnitTest\TebbyPoker.Web.UnitTest.csproj", "{5BAF1CA7-DA36-4728-86EC-0BC642F01F94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TebbyPoker.Managers.Contracts", "TebbyPoker.Managers.Contracts\TebbyPoker.Managers.Contracts.csproj", "{38A64DFE-1196-47B9-9F04-5DC451C7B128}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5BAF1CA7-DA36-4728-86EC-0BC642F01F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BAF1CA7-DA36-4728-86EC-0BC642F01F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BAF1CA7-DA36-4728-86EC-0BC642F01F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38A64DFE-1196-47B9-9F04-5DC451C7B128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A64DFE-1196-47B9-9F04-5DC451C7B128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A64DFE-1196-47B9-9F04-5DC451C7B128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A64DFE-1196-47B9-9F04-5DC451C7B128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
