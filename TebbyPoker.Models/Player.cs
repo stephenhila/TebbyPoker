@@ -20,5 +20,17 @@ namespace TebbyPoker.Models
 
             _hand = new List<Card>();
         }
+
+        /// <summary>
+        /// When a player gives up, places the cards back into the deck's discard pile.
+        /// </summary>
+        /// <param name="deck"></param>
+        public void Fold(Deck deck)
+        {
+            foreach (var card in _hand)
+            {
+                deck.Discard(card);
+            }
+        }
     }
 }

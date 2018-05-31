@@ -13,7 +13,7 @@ namespace TebbyPoker.Managers.UnitTest
         [TestInitialize]
         public void Initialize()
         {
-            unitUnderTest = new GameManager(CreatePlayers("Tebby", "Tobby", "Tubby", "Jeff"));
+            unitUnderTest = new GameManager();
         }
 
         [TestMethod]
@@ -23,6 +23,10 @@ namespace TebbyPoker.Managers.UnitTest
             int expectedCardCount = 1;
 
             // Act
+            unitUnderTest.AddPlayer("Tebby");
+            unitUnderTest.AddPlayer("Tobby");
+            unitUnderTest.AddPlayer("Tubby");
+            unitUnderTest.AddPlayer("Jeff");
             unitUnderTest.DistributeCards();
 
             // Assert
@@ -48,18 +52,6 @@ namespace TebbyPoker.Managers.UnitTest
             }
         }
 
-        #region methods for test arrangement
-        private List<Player> CreatePlayers(params string[] names)
-        {
-            List<Player> players = new List<Player>();
-
-            foreach (var name in names)
-            {
-                players.Add(new Player(name));
-            }
-
-            return players;
-        }
-        #endregion
+        // public void GameManager_EvaluateWinner
     }
 }

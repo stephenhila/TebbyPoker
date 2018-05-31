@@ -9,6 +9,9 @@ namespace TebbyPoker.Managers
 {
     public class GameManager : IGameManager
     {
+        List<Round> _rounds;
+        public List<Round> GetRounds() { return _rounds; }
+
         List<Player> _players;
         public List<Player> GetPlayers() { return _players; }
 

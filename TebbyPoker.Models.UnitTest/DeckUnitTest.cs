@@ -44,6 +44,7 @@ namespace TebbyPoker.Models.UnitTest
             unitUnderTest.Shuffle();
 
             // Assert
+#warning TODO: add assertion that card order have indeed been randomized through shuffling.
             Assert.AreEqual(unitUnderTest.Cards.Select(card => card.ToString()).Distinct().Count(), expectedCount);
         }
 
@@ -58,6 +59,7 @@ namespace TebbyPoker.Models.UnitTest
             unitUnderTest.Shuffle(2);
 
             // Assert
+#warning TODO: add assertion that card order have indeed been randomized through shuffling.
             Assert.AreEqual(unitUnderTest.Cards.Select(card => card.ToString()).Distinct().Count(), expectedCount);
         }
 
@@ -65,8 +67,8 @@ namespace TebbyPoker.Models.UnitTest
         public void Deck_Draw_CardDrawnCorrectly()
         {
             // Arrange
-            int expectedCount = 51;
             Deck unitUnderTest = new Deck();
+            int expectedCount = unitUnderTest.Cards.Count - 1;
 
             // Act
             Card topCard = unitUnderTest.Cards.FirstOrDefault();
@@ -75,6 +77,35 @@ namespace TebbyPoker.Models.UnitTest
             // Assert
             Assert.AreEqual(topCard, drawnCard);
             Assert.AreEqual(unitUnderTest.Cards.Count, expectedCount);
+        }
+
+        public void Deck_Discard_CardDiscardedCorrectly()
+        {
+            // Arrange
+            Deck unitUnderTest = new Deck();
+            int expectedCount = unitUnderTest.Cards.Count - 1;
+
+            // Act
+            unitUnderTest.Discard();
+
+            // Assert
+            Assert.AreEqual(unitUnderTest.Cards.Count, expectedCount);
+        }
+
+        public void Deck_DiscardSpecificCard_CardDiscardedCorrectly()
+        {
+            // Arrange
+            Deck unitUnderTest = new Deck();
+            int expectedCount = unitUnderTest.Cards.Count - 1;
+
+            // Act
+            Card card = unitUnderTest.Draw();
+            unitUnderTest.Discard(card);
+
+            // Assert
+            Assert.AreEqual(unitUnderTest.Cards.Count, expectedCount);
+            Assert.IsFalse(unitUnderTest.Cards.Contains(card));
+            Assert.IsTrue(unitUnderTest.DiscardedCards.Contains(card));
         }
     }
 }

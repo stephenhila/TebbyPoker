@@ -13,6 +13,7 @@ namespace TebbyPoker.Managers
         void AddPlayer(string name);
         List<Player> GetPlayers();
         List<Card> GetRevealedCards();
+        List<Round> GetRounds();
         void DistributeCards();
         void DistributeCards(int timesToDistribute);
         void PerformFlop();
