@@ -28,8 +28,29 @@ namespace TebbyPoker.Models
             _players = players;
         }
 
-        public void EvaluateWinner()
+        public void PerformFlop(Deck deck)
         {
+            deck.Discard();
+            Flop.Add(deck.Draw());
+            Flop.Add(deck.Draw());
+            Flop.Add(deck.Draw());
+        }
+
+        public void PerformRiver(Deck deck)
+        {
+            deck.Discard();
+            _river = deck.Draw();
+        }
+
+        public void PerformTurn(Deck deck)
+        {
+            deck.Discard();
+            _turn = deck.Draw();
+        }
+
+        public Player EvaluateWinner()
+        {
+
             throw new NotImplementedException();
         }
     }

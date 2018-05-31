@@ -14,9 +14,6 @@ namespace TebbyPoker.Models
         List<Card> _discardedCards;
         public List<Card> DiscardedCards { get { return _discardedCards; } }
 
-        List<Card> _shownCards;
-        public List<Card> ShownCards { get { return _shownCards; } }
-
         public Deck()
         {
             _cards = new List<Card>();
@@ -86,8 +83,10 @@ namespace TebbyPoker.Models
         /// <param name="card"></param>
         public void Discard(Card card)
         {
-            _cards.Remove(card);
-            _discardedCards.Add(card);
+            if (_cards.Remove(card))
+            {
+                _discardedCards.Add(card);
+            }
         }
 
         /// <summary>
