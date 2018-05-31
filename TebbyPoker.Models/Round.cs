@@ -48,10 +48,20 @@ namespace TebbyPoker.Models
             _turn = deck.Draw();
         }
 
-        public Player EvaluateWinner()
+        public Player GetWinner()
         {
+            Player winner = null;
+
+            List<Card> shownCards = new List<Card>();
+            shownCards.AddRange(_flop);
+            shownCards.Add(_river);
+            shownCards.Add(_turn);
+
 
             throw new NotImplementedException();
+
+            _winner = winner;
+            return winner;
         }
     }
 }
