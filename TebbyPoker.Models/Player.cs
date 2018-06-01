@@ -22,6 +22,26 @@ namespace TebbyPoker.Models
         }
 
         /// <summary>
+        /// Gets a card from the specified deck.
+        /// </summary>
+        /// <param name="deck"></param>
+        public void GetCard(Deck deck)
+        {
+            _hand.Add(deck.Draw());
+        }
+
+        /// <summary>
+        /// Peculiarly gets a specific card from the specified deck.
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="suit"></param>
+        /// <param name="rank"></param>
+        public void GetCard(Deck deck, Suit suit, Rank rank)
+        {
+            Hand.Add(deck.Draw(suit, rank));
+        }
+
+        /// <summary>
         /// When a player gives up, places the cards back into the deck's discard pile.
         /// </summary>
         /// <param name="deck"></param>

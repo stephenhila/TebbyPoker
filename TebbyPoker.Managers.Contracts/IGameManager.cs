@@ -16,9 +16,5 @@ namespace TebbyPoker.Managers
         List<Round> GetRounds();
         void DistributeCards();
         void DistributeCards(int timesToDistribute);
-        void PerformFlop();
-        void PerformTurn();
-        void PerformRiver();
-        Player CalculateWinner();
     }
 }

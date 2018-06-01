@@ -51,6 +51,7 @@
     <Compile Include="DeckUnitTest.cs" />
     <Compile Include="PlayerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoundUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -69,6 +69,19 @@ namespace TebbyPoker.Models
         }
 
         /// <summary>
+        /// Draws a card with specidied rank and suit.
+        /// </summary>
+        /// <param name="suit"></param>
+        /// <param name="rank"></param>
+        /// <returns></returns>
+        public Card Draw(Suit suit, Rank rank)
+        {
+            Card card = _cards.FirstOrDefault(c => c.Suit == suit && c.Rank == rank);
+            _cards.Remove(card);
+            return card;
+        }
+
+        /// <summary>
         /// Discards the top card.
         /// </summary>
         public void Discard()
@@ -78,15 +91,25 @@ namespace TebbyPoker.Models
         }
 
         /// <summary>
-        /// Discards a specific card. Can be used when a player folds so that cards are discarded.
+        /// Discards a specific card.
         /// </summary>
         /// <param name="card"></param>
         public void Discard(Card card)
         {
-            if (_cards.Remove(card))
+            _cards.Remove(card);
+            if (!_discardedCards.Contains(card))
             {
                 _discardedCards.Add(card);
             }
+        }
+
+        /// <summary>
+        /// Discards a specified list of cards. Can be used when a player folds so that cards are discarded.
+        /// </summary>
+        /// <param name="cards"></param>
+        public void Discard(List<Card> cards)
+        {
+            cards.ForEach(card => Discard(card));
         }
 
         /// <summary>
@@ -97,7 +120,5 @@ namespace TebbyPoker.Models
             _cards.AddRange(_discardedCards);
             _discardedCards.Clear();
         }
-
-
     }
 }

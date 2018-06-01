@@ -12,34 +12,35 @@ namespace TebbyPoker.Managers
         List<Round> _rounds;
         public List<Round> GetRounds() { return _rounds; }
 
-        List<Player> _players;
-        public List<Player> GetPlayers() { return _players; }
+        List<Player> _activePlayers;
+        public List<Player> GetPlayers() { return _activePlayers; }
 
         Deck _deck;
         protected Deck GetDeck() { return _deck; }
-
-        List<Card> _discardedCards;
 
         List<Card> _revealedCards;
         public List<Card> GetRevealedCards() { return _revealedCards; }
 
         public GameManager()
         {
-            _players = new List<Player>();
+            _activePlayers = new List<Player>();
             _deck = new Deck();
-
-            _discardedCards = new List<Card>();
             _revealedCards = new List<Card>();
         }
 
         public void AddPlayer(string name)
         {
-            _players.Add(new Player(name));
+            _activePlayers.Add(new Player(name));
+        }
+
+        public void RemovePlayer(string name)
+        {
+            _activePlayers.RemoveAll(p => p.Name == name);
         }
 
         public void StartNewGame()
         {
-            if (_players == null || _players.Count < 1)
+            if (_activePlayers == null || _activePlayers.Count < 1)
             { throw new InvalidOperationException("There are no players in the game!"); }
 
             _deck.Shuffle(3);
@@ -47,7 +48,7 @@ namespace TebbyPoker.Managers
 
         public void DistributeCards()
         {
-            foreach (var player in _players)
+            foreach (var player in _activePlayers)
             {
                 player.Hand.Add(_deck.Draw());
             }
@@ -59,31 +60,6 @@ namespace TebbyPoker.Managers
             {
                 DistributeCards();
             }
-        }
-
-        public void PerformFlop()
-        {
-            _discardedCards.Add(_deck.Draw());
-            _revealedCards.Add(_deck.Draw());
-            _revealedCards.Add(_deck.Draw());
-            _revealedCards.Add(_deck.Draw());
-        }
-
-        public void PerformTurn()
-        {
-            _discardedCards.Add(_deck.Draw());
-            _revealedCards.Add(_deck.Draw());
-        }
-
-        public void PerformRiver()
-        {
-            _discardedCards.Add(_deck.Draw());
-            _revealedCards.Add(_deck.Draw());
-        }
-
-        public Player CalculateWinner()
-        {
-            throw new NotImplementedException();
         }
     }
 }

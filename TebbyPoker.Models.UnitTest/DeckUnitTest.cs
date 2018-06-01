@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -79,6 +80,7 @@ namespace TebbyPoker.Models.UnitTest
             Assert.AreEqual(unitUnderTest.Cards.Count, expectedCount);
         }
 
+        [TestMethod]
         public void Deck_Discard_CardDiscardedCorrectly()
         {
             // Arrange
@@ -92,20 +94,35 @@ namespace TebbyPoker.Models.UnitTest
             Assert.AreEqual(unitUnderTest.Cards.Count, expectedCount);
         }
 
+        [TestMethod]
         public void Deck_DiscardSpecificCard_CardDiscardedCorrectly()
         {
             // Arrange
             Deck unitUnderTest = new Deck();
-            int expectedCount = unitUnderTest.Cards.Count - 1;
 
             // Act
             Card card = unitUnderTest.Draw();
             unitUnderTest.Discard(card);
 
             // Assert
-            Assert.AreEqual(unitUnderTest.Cards.Count, expectedCount);
             Assert.IsFalse(unitUnderTest.Cards.Contains(card));
             Assert.IsTrue(unitUnderTest.DiscardedCards.Contains(card));
+        }
+
+
+        [TestMethod]
+        public void Deck_DiscardListOfCard_CardsDiscardedCorrectly()
+        {
+            // Arrange
+            Deck unitUnderTest = new Deck();
+            List<Card> cards = new List<Card> { unitUnderTest.Draw(), unitUnderTest.Draw(), unitUnderTest.Draw() };
+
+            // Act
+            unitUnderTest.Discard(cards);
+
+            // Assert
+            cards.ForEach(card => Assert.IsFalse(unitUnderTest.Cards.Contains(card)));
+            cards.ForEach(card => Assert.IsTrue(unitUnderTest.DiscardedCards.Contains(card)));
         }
     }
 }
