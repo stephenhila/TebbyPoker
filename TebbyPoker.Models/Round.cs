@@ -11,8 +11,7 @@ namespace TebbyPoker.Models
         List<Player> _players;
         public List<Player> Players { get { return _players; } }
 
-        List<Player> _winners;
-        public List<Player> Winners { get { return _winners; } }
+        public List<Player> Winners { get; set; }
 
         List<Card> _flop;
         public List<Card> Flop { get { return _flop; } }
@@ -26,7 +25,6 @@ namespace TebbyPoker.Models
         public Round(List<Player> players)
         {
             _players = players;
-            _winners = new List<Player>();
             _flop = new List<Card>();
         }
 
@@ -48,34 +46,6 @@ namespace TebbyPoker.Models
         {
             deck.Discard();
             _turn = deck.Draw();
-        }
-
-        public void CalculateWinners()
-        {
-            Dictionary<Player, Combination> playerCardCombinations = new Dictionary<Player, Combination>();
-
-            List<Card> shownCards = new List<Card>();
-            shownCards.AddRange(_flop);
-            shownCards.Add(_river);
-            shownCards.Add(_turn);
-
-            foreach (var player in _players)
-            {
-                var cardsForCombination = new List<Card>(player.Hand);
-                cardsForCombination.AddRange(shownCards);
-                playerCardCombinations.Add(player, GetBestCombination(cardsForCombination));
-            }
-
-            Combination bestCombination = playerCardCombinations.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
-
-            _winners = playerCardCombinations.Where(pc => pc.Value == bestCombination).Select(x => x.Key).ToList();
-
-#warning TODO: add tie-breaker scenario.
-        }
-
-        private Combination GetBestCombination(List<Card> cards)
-        {
-            throw new NotImplementedException();
         }
     }
 }

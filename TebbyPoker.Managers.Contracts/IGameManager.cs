@@ -10,11 +10,13 @@ namespace TebbyPoker.Managers
     public interface IGameManager
     {
         void StartNewGame();
+        void StartRound();
         void AddPlayer(string name);
         List<Player> GetPlayers();
         List<Card> GetRevealedCards();
         List<Round> GetRounds();
         void DistributeCards();
         void DistributeCards(int timesToDistribute);
+        void CalculateWinners();
     }
 }

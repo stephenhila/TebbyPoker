@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TebbyPoker.GameEngine.Contracts;
 using TebbyPoker.Models;
 
 namespace TebbyPoker.Managers
 {
     public class GameManager : IGameManager
     {
+        IHandEvaluator _handEvaluator;
+
+        public Round CurrentRound { get; set; }
+
         List<Round> _rounds;
         public List<Round> GetRounds() { return _rounds; }
 
@@ -21,11 +26,13 @@ namespace TebbyPoker.Managers
         List<Card> _revealedCards;
         public List<Card> GetRevealedCards() { return _revealedCards; }
 
-        public GameManager()
+        public GameManager(IHandEvaluator handEvaluator)
         {
             _activePlayers = new List<Player>();
             _deck = new Deck();
             _revealedCards = new List<Card>();
+
+            _handEvaluator = handEvaluator;
         }
 
         public void AddPlayer(string name)
@@ -44,6 +51,12 @@ namespace TebbyPoker.Managers
             { throw new InvalidOperationException("There are no players in the game!"); }
 
             _deck.Shuffle(3);
+            StartRound();
+        }
+
+        public void StartRound()
+        {
+            CurrentRound = new Round(_activePlayers);
         }
 
         public void DistributeCards()
@@ -60,6 +73,29 @@ namespace TebbyPoker.Managers
             {
                 DistributeCards();
             }
+        }
+
+        public void CalculateWinners()
+        {
+            Dictionary<Player, Combination> playerCardCombinations = new Dictionary<Player, Combination>();
+
+            List<Card> shownCards = new List<Card>();
+            shownCards.AddRange(CurrentRound.Flop);
+            shownCards.Add(CurrentRound.River);
+            shownCards.Add(CurrentRound.Turn);
+
+            foreach (var player in _activePlayers)
+            {
+                var cardsForCombination = new List<Card>(player.Hand);
+                cardsForCombination.AddRange(shownCards);
+                playerCardCombinations.Add(player, _handEvaluator.Evaluate(cardsForCombination));
+            }
+
+            Combination bestCombination = playerCardCombinations.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
+
+            CurrentRound.Winners = playerCardCombinations.Where(pc => pc.Value == bestCombination).Select(x => x.Key).ToList();
+
+#warning TODO: add tie-breaker scenario.
         }
     }
 }

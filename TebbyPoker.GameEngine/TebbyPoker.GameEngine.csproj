@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C18BE352-A27A-499F-AC03-A1BAB366AAAD}</ProjectGuid>
+    <ProjectGuid>{8CDDF358-8334-419D-BED8-53962FCDB235}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TebbyPoker.Managers</RootNamespace>
-    <AssemblyName>TebbyPoker.Managers</AssemblyName>
+    <RootNamespace>TebbyPoker.GameEngine</RootNamespace>
+    <AssemblyName>TebbyPoker.GameEngine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,17 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameManager.cs" />
+    <Compile Include="HandEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TebbyPoker.GameEngine.Contracts\TebbyPoker.GameEngine.Contracts.csproj">
-      <Project>{71C97627-7FB6-489C-A67B-C042FCCDAA8A}</Project>
+      <Project>{71c97627-7fb6-489c-a67b-c042fccdaa8a}</Project>
       <Name>TebbyPoker.GameEngine.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TebbyPoker.Managers.Contracts\TebbyPoker.Managers.Contracts.csproj">
-      <Project>{38a64dfe-1196-47b9-9f04-5dc451c7b128}</Project>
-      <Name>TebbyPoker.Managers.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\TebbyPoker.Models\TebbyPoker.Models.csproj">
       <Project>{d491e81c-c019-4d5c-8684-27512e5e4b9a}</Project>

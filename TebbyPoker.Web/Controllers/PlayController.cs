@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TebbyPoker.GameEngine;
+using TebbyPoker.GameEngine.Contracts;
 using TebbyPoker.Managers;
 using TebbyPoker.Web.Models;
 
@@ -12,7 +14,8 @@ namespace TebbyPoker.Web.Controllers
     {
         public ActionResult Index()
         {
-            GameplayModel model = new GameplayModel(new GameManager());
+            IHandEvaluator handEvaluator = new HandEvaluator();
+            GameplayModel model = new GameplayModel(new GameManager(handEvaluator));
 
             return Index(model);
         }
