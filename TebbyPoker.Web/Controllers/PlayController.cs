@@ -14,8 +14,8 @@ namespace TebbyPoker.Web.Controllers
     {
         public ActionResult Index()
         {
-            IHandEvaluator handEvaluator = new HandEvaluator();
-            GameplayModel model = new GameplayModel(new GameManager(handEvaluator));
+            ICombinationTypeEvaluator combinationTypeEvaluator = new CombinationTypeEvaluator();
+            GameplayModel model = new GameplayModel(new GameManager(combinationTypeEvaluator));
 
             return Index(model);
         }

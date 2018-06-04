@@ -8,7 +8,7 @@ using TebbyPoker.Models;
 
 namespace TebbyPoker.GameEngine
 {
-    public class HandEvaluator : IHandEvaluator
+    public class CombinationTypeEvaluator : ICombinationTypeEvaluator
     {
         public Combination Evaluate(List<Card> hand)
         {

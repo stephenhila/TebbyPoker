@@ -10,7 +10,7 @@ namespace TebbyPoker.Managers
 {
     public class GameManager : IGameManager
     {
-        IHandEvaluator _handEvaluator;
+        ICombinationTypeEvaluator _combinationTypeEvaluator;
 
         Round _currentRound;
         public Round GetCurrentRound() { return _currentRound; }
@@ -27,14 +27,14 @@ namespace TebbyPoker.Managers
         List<Card> _revealedCards;
         public List<Card> GetRevealedCards() { return _revealedCards; }
 
-        public GameManager(IHandEvaluator handEvaluator)
+        public GameManager(ICombinationTypeEvaluator combinationTypeEvaluator)
         {
             _activePlayers = new List<Player>();
             _deck = new Deck();
             _revealedCards = new List<Card>();
             _rounds = new List<Round>();
 
-            _handEvaluator = handEvaluator;
+            _combinationTypeEvaluator = combinationTypeEvaluator;
         }
 
         public void AddPlayer(string name)
@@ -103,7 +103,7 @@ namespace TebbyPoker.Managers
             {
                 var cardsForCombination = new List<Card>(player.Hand);
                 cardsForCombination.AddRange(shownCards);
-                playerCardCombinations.Add(player, _handEvaluator.Evaluate(cardsForCombination));
+                playerCardCombinations.Add(player, _combinationTypeEvaluator.Evaluate(cardsForCombination));
             }
 
             Combination bestCombination = playerCardCombinations.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;

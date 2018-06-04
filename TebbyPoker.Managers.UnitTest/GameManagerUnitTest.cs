@@ -11,14 +11,14 @@ namespace TebbyPoker.Managers.UnitTest
     [TestClass]
     public class GameManagerUnitTest
     {
-        IHandEvaluator handEvaluator;
+        ICombinationTypeEvaluator combinationTypeEvaluator;
         IGameManager unitUnderTest;
 
         [TestInitialize]
         public void Initialize()
         {
-            handEvaluator = new HandEvaluator();
-            unitUnderTest = new GameManager(handEvaluator);
+            combinationTypeEvaluator = new CombinationTypeEvaluator();
+            unitUnderTest = new GameManager(combinationTypeEvaluator);
         }
 
         [TestMethod]

@@ -7,7 +7,7 @@ using TebbyPoker.Models;
 
 namespace TebbyPoker.GameEngine.Contracts
 {
-    public interface IHandEvaluator
+    public interface ICombinationTypeEvaluator
     {
         Combination Evaluate(List<Card> hand);
     }
