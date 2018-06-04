@@ -32,6 +32,7 @@ namespace TebbyPoker.Managers
             _activePlayers = new List<Player>();
             _deck = new Deck();
             _revealedCards = new List<Card>();
+            _rounds = new List<Round>();
 
             _handEvaluator = handEvaluator;
         }
@@ -46,17 +47,13 @@ namespace TebbyPoker.Managers
             _activePlayers.RemoveAll(p => p.Name == name);
         }
 
-        public void StartNewGame()
+        public void StartRound()
         {
             if (_activePlayers == null || _activePlayers.Count < 1)
             { throw new InvalidOperationException("There are no players in the game!"); }
 
             _deck.Shuffle(3);
-            StartRound();
-        }
 
-        public void StartRound()
-        {
             Round currentRound = new Round(_activePlayers);
             _rounds.Add(_currentRound);
             _currentRound = currentRound;

@@ -27,11 +27,14 @@ namespace TebbyPoker.Managers.UnitTest
             // Arrange
             int expectedCardCount = 1;
 
-            // Act
             unitUnderTest.AddPlayer("Tebby");
             unitUnderTest.AddPlayer("Tobby");
             unitUnderTest.AddPlayer("Tubby");
             unitUnderTest.AddPlayer("Jeff");
+
+            unitUnderTest.StartRound();
+
+            // Act
             unitUnderTest.DistributeCards();
 
             // Assert
@@ -46,6 +49,13 @@ namespace TebbyPoker.Managers.UnitTest
         {
             // Arrange
             int expectedCardCount = 2;
+
+            unitUnderTest.AddPlayer("Tebby");
+            unitUnderTest.AddPlayer("Tobby");
+            unitUnderTest.AddPlayer("Tubby");
+            unitUnderTest.AddPlayer("Jeff");
+
+            unitUnderTest.StartRound();
 
             // Act
             unitUnderTest.DistributeCards(2);
@@ -65,8 +75,11 @@ namespace TebbyPoker.Managers.UnitTest
             unitUnderTest.AddPlayer(expectedWinner);
 
             string expectedLoser = "Karl Malone";
-            unitUnderTest.AddPlayer(expectedWinner);
+            unitUnderTest.AddPlayer(expectedLoser);
 
+            unitUnderTest.StartRound();
+
+            // Arrange to force specific cards into players hands
             unitUnderTest.GetPlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Diamond, Rank.Six);
             unitUnderTest.GetPlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Spade, Rank.Six);
 
@@ -92,10 +105,12 @@ namespace TebbyPoker.Managers.UnitTest
             // Arrange turn card
             unitUnderTest.GetDeck().Cards.MoveItemToIndex(unitUnderTest.GetDeck().Cards.Find(card => card.Rank == Rank.King && card.Suit == Suit.Spade), index++);
 
-            // Act
+            // Arrange shown cards
             unitUnderTest.PerformFlop();
             unitUnderTest.PerformRiver();
             unitUnderTest.PerformTurn();
+
+            // Act
             unitUnderTest.CalculateWinners();
 
             // Assert

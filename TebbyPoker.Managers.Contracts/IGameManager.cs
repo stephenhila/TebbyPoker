@@ -9,7 +9,6 @@ namespace TebbyPoker.Managers
 {
     public interface IGameManager
     {
-        void StartNewGame();
         void StartRound();
         void AddPlayer(string name);
         Deck GetDeck();
