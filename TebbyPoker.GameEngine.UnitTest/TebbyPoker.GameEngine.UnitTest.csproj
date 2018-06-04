@@ -54,6 +54,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TebbyPoker.GameEngine.Contracts\TebbyPoker.GameEngine.Contracts.csproj">
+      <Project>{71c97627-7fb6-489c-a67b-c042fccdaa8a}</Project>
+      <Name>TebbyPoker.GameEngine.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TebbyPoker.GameEngine\TebbyPoker.GameEngine.csproj">
+      <Project>{8cddf358-8334-419d-bed8-53962fcdb235}</Project>
+      <Name>TebbyPoker.GameEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TebbyPoker.Models\TebbyPoker.Models.csproj">
+      <Project>{d491e81c-c019-4d5c-8684-27512e5e4b9a}</Project>
+      <Name>TebbyPoker.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
