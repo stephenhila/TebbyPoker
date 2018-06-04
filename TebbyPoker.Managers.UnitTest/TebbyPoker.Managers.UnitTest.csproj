@@ -55,6 +55,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TebbyPoker.GameEngine.Contracts\TebbyPoker.GameEngine.Contracts.csproj">
+      <Project>{71C97627-7FB6-489C-A67B-C042FCCDAA8A}</Project>
+      <Name>TebbyPoker.GameEngine.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TebbyPoker.GameEngine\TebbyPoker.GameEngine.csproj">
+      <Project>{8cddf358-8334-419d-bed8-53962fcdb235}</Project>
+      <Name>TebbyPoker.GameEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TebbyPoker.Managers.Contracts\TebbyPoker.Managers.Contracts.csproj">
       <Project>{38a64dfe-1196-47b9-9f04-5dc451c7b128}</Project>
       <Name>TebbyPoker.Managers.Contracts</Name>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TebbyPoker.GameEngine;
+using TebbyPoker.GameEngine.Contracts;
 using TebbyPoker.Models;
 
 namespace TebbyPoker.Managers.UnitTest
@@ -8,12 +10,14 @@ namespace TebbyPoker.Managers.UnitTest
     [TestClass]
     public class GameManagerUnitTest
     {
+        IHandEvaluator handEvaluator;
         IGameManager unitUnderTest;
 
         [TestInitialize]
         public void Initialize()
         {
-            unitUnderTest = new GameManager();
+            handEvaluator = new HandEvaluator();
+            unitUnderTest = new GameManager(handEvaluator);
         }
 
         [TestMethod]
