@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TebbyPoker.GameEngine.UnitTest
 {
     [TestClass]
-    public class HandEvaluatorUnitTest
+    public class CombinationTypeEvaluatorUnitTest
     {
         [TestMethod]
         public void TestMethod1()
