@@ -12,7 +12,8 @@ namespace TebbyPoker.Managers
     {
         IHandEvaluator _handEvaluator;
 
-        public Round CurrentRound { get; set; }
+        Round _currentRound;
+        public Round GetCurrentRound() { return _currentRound; }
 
         List<Round> _rounds;
         public List<Round> GetRounds() { return _rounds; }
@@ -21,7 +22,7 @@ namespace TebbyPoker.Managers
         public List<Player> GetPlayers() { return _activePlayers; }
 
         Deck _deck;
-        protected Deck GetDeck() { return _deck; }
+        public Deck GetDeck() { return _deck; }
 
         List<Card> _revealedCards;
         public List<Card> GetRevealedCards() { return _revealedCards; }
@@ -56,7 +57,9 @@ namespace TebbyPoker.Managers
 
         public void StartRound()
         {
-            CurrentRound = new Round(_activePlayers);
+            Round currentRound = new Round(_activePlayers);
+            _rounds.Add(_currentRound);
+            _currentRound = currentRound;
         }
 
         public void DistributeCards()
@@ -75,14 +78,29 @@ namespace TebbyPoker.Managers
             }
         }
 
+        public void PerformFlop()
+        {
+            _currentRound.PerformFlop(_deck);
+        }
+
+        public void PerformRiver()
+        {
+            _currentRound.PerformRiver(_deck);
+        }
+
+        public void PerformTurn()
+        {
+            _currentRound.PerformTurn(_deck);
+        }
+
         public void CalculateWinners()
         {
             Dictionary<Player, Combination> playerCardCombinations = new Dictionary<Player, Combination>();
 
             List<Card> shownCards = new List<Card>();
-            shownCards.AddRange(CurrentRound.Flop);
-            shownCards.Add(CurrentRound.River);
-            shownCards.Add(CurrentRound.Turn);
+            shownCards.AddRange(_currentRound.Flop);
+            shownCards.Add(_currentRound.River);
+            shownCards.Add(_currentRound.Turn);
 
             foreach (var player in _activePlayers)
             {
@@ -93,7 +111,7 @@ namespace TebbyPoker.Managers
 
             Combination bestCombination = playerCardCombinations.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
 
-            CurrentRound.Winners = playerCardCombinations.Where(pc => pc.Value == bestCombination).Select(x => x.Key).ToList();
+            _currentRound.Winners = playerCardCombinations.Where(pc => pc.Value == bestCombination).Select(x => x.Key).ToList();
 
 #warning TODO: add tie-breaker scenario.
         }
