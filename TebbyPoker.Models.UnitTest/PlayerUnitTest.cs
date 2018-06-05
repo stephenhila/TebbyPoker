@@ -40,5 +40,29 @@ namespace TebbyPoker.Models.UnitTest
             Assert.AreEqual(tebby.Hand.Count, expectedHandCount);
             Assert.AreEqual(deck.Cards.Count, expectedDeckCount);
         }
+
+        [TestMethod]
+        public void Player_Fold_PlayerFoldedCorrectly()
+        {
+            // Arrange
+            Deck deck = new Deck();
+            deck.Shuffle(3);
+            Player tebby = new Player("Tebby");
+
+            int expectedHandCount = 0;
+            int expectedDiscardCount = 2;
+            int expectedDeckCount = deck.Cards.Count - expectedDiscardCount;
+
+            // Act
+            tebby.GetCard(deck);
+            tebby.GetCard(deck);
+            tebby.Fold(deck);
+
+            // Assert
+            Assert.AreEqual(tebby.Hand.Count, expectedHandCount);
+            Assert.AreEqual(deck.Cards.Count, expectedDeckCount);
+            Assert.AreEqual(deck.DiscardedCards.Count, expectedDiscardCount);
+#warning TODO: Assert.AreEqual(expected,actual) usage incorrect. Swap expected value and actual value into correct position.
+        }
     }
 }

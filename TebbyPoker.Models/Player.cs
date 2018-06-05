@@ -51,6 +51,8 @@ namespace TebbyPoker.Models
             {
                 deck.Discard(card);
             }
+
+            _hand.Clear();
         }
     }
 }
