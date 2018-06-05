@@ -68,7 +68,14 @@ namespace TebbyPoker.GameEngine
 
         public bool IsStraightFlush(List<Card> cards)
         {
-            throw new NotImplementedException();
+            foreach (var cardGroup in cards.GroupBy(c => c.Suit))
+            {
+                if (cardGroup.Count() >= 5 && IsStraight(cardGroup.ToList()))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool IsFourOfAKind(List<Card> cards)
@@ -91,7 +98,15 @@ namespace TebbyPoker.GameEngine
             {
                 if (cardGroup.Count() == 3)
                 {
-                    hasThreeOfAKind = true;
+                    if (!hasThreeOfAKind)
+                    {
+                        hasThreeOfAKind = true;
+                    }
+                    else
+                    {
+                        // if a second three of a kind was found, then consider two of three of those as the pair card
+                        hasAPair = true;
+                    }
                 }
                 else if (cardGroup.Count() == 2)
                 {
@@ -115,7 +130,28 @@ namespace TebbyPoker.GameEngine
 
         public bool IsStraight(List<Card> cards)
         {
-            throw new NotImplementedException();
+            int straightCounter = 1;
+            Card previousCard = null;
+            foreach (var card in cards.OrderBy(c => c.Rank))
+            {
+                if (previousCard != null)
+                {
+                    if (card.Rank - 1 == previousCard.Rank)
+                    {
+                        straightCounter++;
+                    }
+                    else if (card.Rank == Rank.Ace && previousCard.Rank == Rank.King)
+                    {
+                        straightCounter++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                previousCard = card;
+            }
+            return straightCounter >= 5;
         }
 
         public bool IsThreeOfAKind(List<Card> cards)
