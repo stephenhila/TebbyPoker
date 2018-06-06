@@ -14,23 +14,31 @@ namespace TebbyPoker.Web.Controllers
     {
         public ActionResult Index()
         {
-            ICombinationTypeEvaluator combinationTypeEvaluator = new CombinationTypeEvaluator();
-            GameplayModel model = new GameplayModel(new GameManager(combinationTypeEvaluator));
+            PlayIndexViewModel model = new PlayIndexViewModel();
 
             return Index(model);
         }
 
         [HttpPost]
-        public ActionResult Index(GameplayModel model)
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(PlayIndexViewModel model)
         {
-            return View(model);
+            return View("Index", model);
         }
 
-        public ActionResult AddPlayer(GameplayModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddPlayer(PlayIndexViewModel model)
         {
-#warning TODO: Implement adding of players. Think of way to have a view for starting the game (ie. adding players), and then a view for the gameplay action itself. Consider if there is such a thing as sub-views in MVC.
-            throw new NotImplementedException();
-            // model.AddPlayer()
+            model.Players.Add(model.PlayerToAdd);
+            return Index(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePlayer(PlayIndexViewModel model, string player)
+        {
+            model.Players.Remove(player);
             return Index(model);
         }
     }

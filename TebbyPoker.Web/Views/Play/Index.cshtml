@@ -1,15 +1,45 @@
-﻿@model TebbyPoker.Web.Models.GameplayModel
+﻿@model TebbyPoker.Web.Models.PlayIndexViewModel
 @{
+    /**/
+
+    /**/
+
     ViewBag.Title = "Play";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Play</h2>
+<h2>Play Tebby Poker</h2>
 
-Player Count: @Model.Players.Count()
-@{ 
-    foreach (var player in Model.Players)
-    {
-        @player.Name
-    }
+<h3>Player Count: @Model.Players.Count()</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <table>
+        @for (int i = 0; i < Model.Players.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(model => model.Players[i])
+                    @Model.Players[i]
+                </td>
+                <td>
+                    <input type="submit" value="Remove" formaction=@Url.Action("DeletePlayer", "Play", new { player = Model.Players[i] }) />
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <br />
+
+    @Html.LabelFor(model => model.PlayerToAdd)
+    <br />
+    @Html.EditorFor(model => model.PlayerToAdd)
+    <br />
+    <input type="submit" value="Add Player" formaction="@Url.Action("AddPlayer", "Play")" />
+    <br />
+    <br />
+    <input type="submit" value="Start Game" formaction="@Url.Action("StartGame", "Play")" />
 }
