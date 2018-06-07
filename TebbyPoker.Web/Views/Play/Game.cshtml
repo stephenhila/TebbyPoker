@@ -1,0 +1,23 @@
+﻿@model TebbyPoker.Web.Models.PlayGameViewModel
+@{
+    ViewBag.Title = "Game";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Start</h2>
+
+@foreach (var player in Model.Players)
+{
+    @Html.Label("Player: ")
+    @player.Name
+    <br />
+    @Html.Label("HAnd: ")
+
+    foreach (var card in player.Hand)
+    {
+        @card.ToString()
+        <br />
+    }
+    <br />
+    <br />
+}
