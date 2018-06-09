@@ -11,12 +11,14 @@
     @Html.Label("Player: ")
     @player.Name
     <br />
-    @Html.Label("HAnd: ")
+    @Html.Label("Hand: ")
+    <br />
 
     foreach (var card in player.Hand)
     {
         @card.ToString()
-        <br />
+        @Html.Raw("\n")
+        @Html.Raw("\n")
     }
     <br />
     <br />

@@ -26,6 +26,7 @@ namespace TebbyPoker.Web.Models
             _deck.Shuffle(3);
 
             DistributeCards(_players, _deck);
+            DistributeCards(_players, _deck);
         }
 
         void DistributeCards(List<Player> players, Deck deck)
