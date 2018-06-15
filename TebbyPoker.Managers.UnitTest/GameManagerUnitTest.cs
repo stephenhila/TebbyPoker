@@ -22,46 +22,21 @@ namespace TebbyPoker.Managers.UnitTest
         }
 
         [TestMethod]
-        public void GameManager_DistributeOneCardEach_EachPlayerHasOneCardInHand()
-        {
-            // Arrange
-            int expectedCardCount = 1;
-
-            unitUnderTest.AddPlayer("Tebby");
-            unitUnderTest.AddPlayer("Tobby");
-            unitUnderTest.AddPlayer("Tubby");
-            unitUnderTest.AddPlayer("Jeff");
-
-            unitUnderTest.StartRound();
-
-            // Act
-            unitUnderTest.DistributeCards();
-
-            // Assert
-            foreach (var player in unitUnderTest.GetPlayers())
-            {
-                Assert.AreEqual(player.Hand.Count, expectedCardCount);
-            }
-        }
-
-        [TestMethod]
-        public void GameManager_DistributeTwoCardsEach_EachPlayerHasTwoCardsInHand()
+        public void GameManager_StartNewRound_DistributeTwoCardsEach()
         {
             // Arrange
             int expectedCardCount = 2;
 
-            unitUnderTest.AddPlayer("Tebby");
-            unitUnderTest.AddPlayer("Tobby");
-            unitUnderTest.AddPlayer("Tubby");
-            unitUnderTest.AddPlayer("Jeff");
-
-            unitUnderTest.StartRound();
+            unitUnderTest.JoinGame(new Player("Tebby"));
+            unitUnderTest.JoinGame(new Player("Tobby"));
+            unitUnderTest.JoinGame(new Player("Tubby"));
+            unitUnderTest.JoinGame(new Player("Jeff"));
 
             // Act
-            unitUnderTest.DistributeCards(2);
+            unitUnderTest.StartNewRound();
 
             // Assert
-            foreach (var player in unitUnderTest.GetPlayers())
+            foreach (var player in unitUnderTest.GetActivePlayers())
             {
                 Assert.AreEqual(player.Hand.Count, expectedCardCount);
             }
@@ -72,19 +47,19 @@ namespace TebbyPoker.Managers.UnitTest
         {
             // Arrange
             string expectedWinner = "Michael Jordan";
-            unitUnderTest.AddPlayer(expectedWinner);
+            unitUnderTest.JoinGame(new Player(expectedWinner));
 
             string expectedLoser = "Karl Malone";
-            unitUnderTest.AddPlayer(expectedLoser);
+            unitUnderTest.JoinGame(new Player(expectedLoser));
 
-            unitUnderTest.StartRound();
+            unitUnderTest.StartNewRound();
 
             // Arrange to force specific cards into players hands
-            unitUnderTest.GetPlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Diamond, Rank.Six);
-            unitUnderTest.GetPlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Spade, Rank.Six);
+            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Diamond, Rank.Six);
+            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Spade, Rank.Six);
 
-            unitUnderTest.GetPlayers().First(p => p.Name == expectedLoser).GetCard(unitUnderTest.GetDeck(), Suit.Heart, Rank.Two);
-            unitUnderTest.GetPlayers().First(p => p.Name == expectedLoser).GetCard(unitUnderTest.GetDeck(), Suit.Club, Rank.Two);
+            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedLoser).GetCard(unitUnderTest.GetDeck(), Suit.Heart, Rank.Two);
+            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedLoser).GetCard(unitUnderTest.GetDeck(), Suit.Club, Rank.Two);
 
             int index = 0;
 

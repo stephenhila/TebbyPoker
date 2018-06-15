@@ -6,7 +6,13 @@
 
 <h2>Start</h2>
 
-@foreach (var player in Model.Players)
+<div>Flop:</div>
+@foreach (var card in Model.CurrentRound.Flop)
+{
+
+}
+
+@foreach (var player in Model.CurrentRound.Players)
 {
     @Html.Label("Player: ")
     @player.Name

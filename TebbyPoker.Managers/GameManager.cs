@@ -19,7 +19,13 @@ namespace TebbyPoker.Managers
         public List<Round> GetRounds() { return _rounds; }
 
         List<Player> _activePlayers;
-        public List<Player> GetPlayers() { return _activePlayers; }
+        public List<Player> GetActivePlayers() { return _activePlayers; }
+
+        Queue<Player> _joiningPlayers;
+        public List<Player> GetJoiningPlayers() { return _joiningPlayers.ToList(); }
+
+        Queue<Player> _leavingPlayers;
+        public List<Player> GetLeavingPlayers() { return _leavingPlayers.ToList(); }
 
         Deck _deck;
         public Deck GetDeck() { return _deck; }
@@ -30,6 +36,8 @@ namespace TebbyPoker.Managers
         public GameManager(ICombinationTypeEvaluator combinationTypeEvaluator)
         {
             _activePlayers = new List<Player>();
+            _joiningPlayers = new Queue<Player>();
+            _leavingPlayers = new Queue<Player>();
             _deck = new Deck();
             _revealedCards = new List<Card>();
             _rounds = new List<Round>();
@@ -37,22 +45,58 @@ namespace TebbyPoker.Managers
             _combinationTypeEvaluator = combinationTypeEvaluator;
         }
 
-        public void AddPlayer(string name)
+        void AddPlayer(string name)
         {
-            _activePlayers.Add(new Player(name));
+            AddPlayer(new Player(name));
         }
 
-        public void RemovePlayer(string name)
+        void AddPlayer(Player player)
+        {
+            _activePlayers.Add(player);
+        }
+
+        void RemovePlayer(string name)
         {
             _activePlayers.RemoveAll(p => p.Name == name);
         }
 
-        public void StartRound()
+        void RemovePlayer(Player player)
         {
-            if (_activePlayers == null || _activePlayers.Count < 1)
-            { throw new InvalidOperationException("There are no players in the game!"); }
+            RemovePlayer(player.Name);
+        }
 
-            _deck.Shuffle(3);
+        public void JoinGame(Player player)
+        {
+            _joiningPlayers.Enqueue(player);
+        }
+
+        public void LeaveGame(Player player)
+        {
+            _leavingPlayers.Enqueue(player);
+        }
+
+        public void StartNewRound()
+        {
+            // remove all leaving players
+            while (_leavingPlayers.Count > 0)
+            {
+                Player leavingPlayer = _leavingPlayers.Dequeue();
+                leavingPlayer.Fold(_deck);
+                RemovePlayer(leavingPlayer);
+            }
+
+            // add joining players
+            while (_joiningPlayers.Count > 0)
+            {
+                Player joiningPlayer = _joiningPlayers.Dequeue();
+                AddPlayer(joiningPlayer);
+            }
+
+            if (_activePlayers == null || _activePlayers.Count < 1)
+            { throw new InvalidOperationException("There are no active players in the game!"); }
+
+            _deck.Shuffle(10);
+            DistributeCards(2);
 
             Round currentRound = new Round(_activePlayers);
             _rounds.Add(_currentRound);

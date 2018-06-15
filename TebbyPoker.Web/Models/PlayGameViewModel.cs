@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TebbyPoker.GameEngine;
 using TebbyPoker.Managers;
 using TebbyPoker.Models;
 
@@ -12,29 +13,30 @@ namespace TebbyPoker.Web.Models
         List<Player> _players;
         public IEnumerable<Player> Players
         {
-            get { return _players; }
+            get { return _manager.GetActivePlayers(); }
         }
 
-        Deck _deck;
-        public Deck Deck { get { return _deck; } }
+        public Deck Deck { get { return _manager.GetDeck(); } }
+
+        public Round CurrentRound { get { return _manager.GetCurrentRound(); } }
+
+        GameManager _manager;
 
         public PlayGameViewModel(List<Player> players)
         {
-            _players = players;
-
-            _deck = new Deck();
-            _deck.Shuffle(3);
-
-            DistributeCards(_players, _deck);
-            DistributeCards(_players, _deck);
-        }
-
-        void DistributeCards(List<Player> players, Deck deck)
-        {
+            _manager = new GameManager(new CombinationTypeEvaluator());
+            
             foreach (var player in players)
             {
-                player.GetCard(deck);
+                _manager.JoinGame(player);
             }
+
+            _manager.StartNewRound();
+            _manager.PerformFlop();
+            _manager.PerformRiver();
+            _manager.PerformTurn();
+
+            _manager.CalculateWinners();
         }
     }
 }
