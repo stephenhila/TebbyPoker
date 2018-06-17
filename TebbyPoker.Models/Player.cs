@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TebbyPoker.Models
 {
+    [Table("Players")]
     public class Player
     {
+        [Key()]
+        Guid _id;
+        public Guid Id { get { return _id; } }
+
         string _name;
         public string Name { get { return _name; } }
 

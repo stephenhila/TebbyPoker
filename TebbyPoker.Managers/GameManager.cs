@@ -47,7 +47,12 @@ namespace TebbyPoker.Managers
 
         void AddPlayer(string name)
         {
-            AddPlayer(new Player(name));
+#warning TODO: think of design to handle database transactions
+            using (var context = new TebbyPokerContext())
+            {
+                Player player = context.Players.First(p => p.Name == name);
+                AddPlayer(player);
+            }
         }
 
         void AddPlayer(Player player)

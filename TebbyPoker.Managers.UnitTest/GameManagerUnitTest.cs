@@ -46,20 +46,37 @@ namespace TebbyPoker.Managers.UnitTest
         public void Round_EvaluateWinner_FourOfAKindWinsAgainstPair()
         {
             // Arrange
-            string expectedWinner = "Michael Jordan";
-            unitUnderTest.JoinGame(new Player(expectedWinner));
+            Player expectedWinner = new Player("Michael Jordan");
+            unitUnderTest.JoinGame(expectedWinner);
 
-            string expectedLoser = "Karl Malone";
-            unitUnderTest.JoinGame(new Player(expectedLoser));
+            Player expectedLoser = new Player("Karl Malone");
+            unitUnderTest.JoinGame(expectedLoser);
 
             unitUnderTest.StartNewRound();
 
-            // Arrange to force specific cards into players hands
-            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Diamond, Rank.Six);
-            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedWinner).GetCard(unitUnderTest.GetDeck(), Suit.Spade, Rank.Six);
+            // Arrange place expected winner's cards back into deck for later arrangement
+            foreach (var card in expectedWinner.Hand)
+            {
+                unitUnderTest.GetDeck().Cards.Add(card);
+            }
+            expectedWinner.Hand.Clear();
 
-            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedLoser).GetCard(unitUnderTest.GetDeck(), Suit.Heart, Rank.Two);
-            unitUnderTest.GetActivePlayers().First(p => p.Name == expectedLoser).GetCard(unitUnderTest.GetDeck(), Suit.Club, Rank.Two);
+            // Arrange place expected loser's cards back into deck for later arrangement
+            foreach (var card in expectedLoser.Hand)
+            {
+                unitUnderTest.GetDeck().Cards.Add(card);
+            }
+            expectedLoser.Hand.Clear();
+
+            expectedWinner.Fold(unitUnderTest.GetDeck());
+            expectedLoser.Fold(unitUnderTest.GetDeck());
+
+            // Arrange to force specific cards into players hands
+            expectedWinner.GetCard(unitUnderTest.GetDeck(), Suit.Diamond, Rank.Six);
+            expectedWinner.GetCard(unitUnderTest.GetDeck(), Suit.Spade, Rank.Six);
+
+            expectedLoser.GetCard(unitUnderTest.GetDeck(), Suit.Heart, Rank.Two);
+            expectedLoser.GetCard(unitUnderTest.GetDeck(), Suit.Club, Rank.Two);
 
             int index = 0;
 
@@ -89,8 +106,8 @@ namespace TebbyPoker.Managers.UnitTest
             unitUnderTest.CalculateWinners();
 
             // Assert
-            Assert.IsTrue(unitUnderTest.GetCurrentRound().Winners.Exists(w => w.Name == expectedWinner));
-            Assert.IsFalse(unitUnderTest.GetCurrentRound().Winners.Exists(w => w.Name == expectedLoser));
+            Assert.IsTrue(unitUnderTest.GetCurrentRound().Winners.Exists(w => w == expectedWinner));
+            Assert.IsFalse(unitUnderTest.GetCurrentRound().Winners.Exists(w => w == expectedLoser));
         }
     }
 
